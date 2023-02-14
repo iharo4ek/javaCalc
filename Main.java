@@ -8,4 +8,5 @@ public class Main {
         Application application = new ConsoleApplication();
         application.run();
     }
+
 }
