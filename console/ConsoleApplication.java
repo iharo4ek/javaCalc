@@ -6,7 +6,7 @@ import my.tms_hw.console.util.ConsoleWriter;
 import my.tms_hw.entity.Operation;
 import my.tms_hw.entity.OperationTypes;
 import my.tms_hw.service.CalculatorService;
-import my.tms_hw.service.ValidatorService;
+import my.tms_hw.validators.OperationValidator;
 import my.tms_hw.storage.InMemoryoperationStorage;
 import my.tms_hw.storage.OperationStorage;
 import my.tms_hw.util.Calculator;
@@ -23,7 +23,7 @@ public class ConsoleApplication implements Application {
 
     private final OperationStorage storage = new InMemoryoperationStorage();
 
-    private Validator validator = new ValidatorService();
+    private Validator validator = new OperationValidator();
 
     public void run() {
         boolean continueCalculations = true;
@@ -36,8 +36,7 @@ public class ConsoleApplication implements Application {
             while (!isCorrect) {
                 writer.writeLine("введите первое число");
                 answer = reader.readLine();
-                validator.setPattern("[0-9]*.?[0-9]+");
-                isCorrect = validator.validate(answer);
+                isCorrect = validator.validateDouble(answer);
                 ;
             }
             num1 = Double.parseDouble(answer);
@@ -46,19 +45,17 @@ public class ConsoleApplication implements Application {
             while (!isCorrect) {
                 writer.writeLine("введите второе число");
                 answer = reader.readLine();
-                validator.setPattern("[0-9]*.?[0-9]+");
-                isCorrect = validator.validate(answer);
+                isCorrect = validator.validateDouble(answer);
 
             }
             num2 = Double.parseDouble(answer);
 
 
             isCorrect = false;
-            validator.setPattern("[1-4]");
             while (!isCorrect) {
                 writer.writeLine("Введите тип операции (1 - sum, 2 - sub, 3 - mul, 4 - div)");
                 answer = reader.readLine();
-                isCorrect = validator.validate(answer);
+                isCorrect = validator.validateIntFromOneToFour(answer);
             }
             operatonType = Integer.parseInt(answer);
 
