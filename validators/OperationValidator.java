@@ -1,4 +1,4 @@
-package my.tms_hw.service;
+package my.tms_hw.validators;
 
 import my.tms_hw.util.Validator;
 
